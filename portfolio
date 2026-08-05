@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanchit Chhabra — AI Systems &amp; Cybersecurity</title>
+<meta name="description" content="AI systems developer and cybersecurity analyst. RAG platforms, penetration testing, and secure architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E1620;
+    --bg-panel: #141D29;
+    --bg-panel-alt: #1A2432;
+    --border: #29354A;
+    --text: #E7ECF2;
+    --text-muted: #8695A7;
+    --text-dim: #5B6B80;
+    --verified: #3FBBA6;
+    --verified-dim: rgba(63,187,166,0.12);
+    --flag: #E8A33D;
+    --flag-dim: rgba(232,163,61,0.12);
+    --display: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --body: 'Inter', sans-serif;
+    --max: 920px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--verified); color: #05130F; }
+
+  /* faint grid texture */
+  .grid-bg{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.12;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(14,22,32,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 16px 28px;
+  }
+  .nav-id{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+  .nav-id b{ color: var(--text); font-weight: 600; }
+  .nav-links{
+    display:flex;
+    gap: 24px;
+    list-style:none;
+    margin:0; padding:0;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color: var(--verified); }
+  .nav-links li::before{ content: "· "; color: var(--text-dim); }
+  @media (max-width: 640px){ .nav-links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding: 110px 0 90px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--verified);
+    letter-spacing: 0.06em;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--verified);
+    box-shadow: 0 0 0 3px var(--verified-dim);
+  }
+  h1.name{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(40px, 6.2vw, 68px);
+    line-height: 1.03;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero-line{ color: var(--text-muted); }
+  .pitch{
+    font-family: var(--mono);
+    font-size: clamp(15px, 1.9vw, 18px);
+    color: var(--text);
+    max-width: 620px;
+    border-left: 2px solid var(--verified);
+    padding-left: 18px;
+    margin: 28px 0 34px;
+  }
+  .cursor{
+    display:inline-block;
+    width: 9px; height: 1.1em;
+    background: var(--verified);
+    margin-left: 4px;
+    vertical-align: -0.15em;
+    animation: blink 1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .cursor{ animation: none; opacity: 1; } }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .hero-cta{
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover, .btn:focus-visible{ border-color: var(--verified); background: var(--verified-dim); }
+  .btn-solid{
+    background: var(--verified);
+    color: #05130F;
+    border-color: var(--verified);
+    font-weight: 600;
+  }
+  .btn-solid:hover{ background: #55c9b6; }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{
+    padding: 76px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-head{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 38px;
+  }
+  .sec-tag{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    margin-right: 14px;
+  }
+  h2{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 30px);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .sec-rule{ flex:1; height:1px; background: var(--border); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-text p{ color: var(--text-muted); margin: 0 0 16px; font-size: 15.5px; }
+  .about-text strong{ color: var(--text); font-weight: 600; }
+
+  .ledger{
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    font-family: var(--mono);
+    font-size: 13px;
+    height: fit-content;
+  }
+  .ledger-title{
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .ledger-row{
+    display:flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
+  .ledger-row:first-of-type{ border-top: none; }
+  .ledger-k{ color: var(--text-dim); }
+  .ledger-v{ color: var(--text); text-align: right; }
+
+  /* ---------- EXPERIENCE ---------- */
+  .entry{
+    display:grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid var(--border);
+  }
+  .entry:first-of-type{ border-top: none; }
+  @media (max-width: 640px){ .entry{ grid-template-columns: 1fr; gap: 8px; } }
+  .entry-meta{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .entry-role{ font-weight: 600; color: var(--text); margin: 0 0 2px; font-size: 16px; }
+  .entry-org{ color: var(--verified); font-family: var(--mono); font-size: 13px; margin-bottom: 12px; }
+  .entry ul{ margin: 0; padding-left: 18px; color: var(--text-muted); font-size: 14.5px; }
+  .entry li{ margin-bottom: 6px; }
+
+  /* ---------- PROJECTS (case files) ---------- */
+  .case{
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 22px;
+  }
+  .case-top{
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .case-title{ font-family: var(--display); font-weight: 600; font-size: 19px; margin: 0 0 6px; }
+  .case-stack{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .badge{
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .badge-verified{ background: var(--verified-dim); color: var(--verified); border: 1px solid rgba(63,187,166,0.35); }
+  .badge-flag{ background: var(--flag-dim); color: var(--flag); border: 1px solid rgba(232,163,61,0.35); }
+
+  .fields{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 18px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 640px){ .fields{ grid-template-columns: 1fr; } }
+  .field-k{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 4px; }
+  .field-v{ font-size: 14px; color: var(--text); }
+
+  .case p.result{ color: var(--text-muted); font-size: 14.5px; margin: 14px 0 0; }
+  .case p.result b{ color: var(--verified); font-weight: 600; }
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .skill-group{
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    background: var(--bg-panel);
+  }
+  .skill-group h3{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--flag);
+    letter-spacing: 0.06em;
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+  .tag-list{ display:flex; flex-wrap:wrap; gap: 8px; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text);
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  /* ---------- ELEVATOR PITCH ---------- */
+  .transcript{
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 30px;
+    position: relative;
+  }
+  .transcript-label{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .transcript p{
+    font-family: var(--display);
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.55;
+    color: var(--text);
+    margin: 0;
+    font-weight: 400;
+  }
+  .transcript .runtime{
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding: 70px 0 90px; }
+  .contact-grid{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .contact-card{
+    flex: 1 1 200px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    background: var(--bg-panel);
+    text-decoration: none;
+    display:block;
+    transition: border-color 0.15s ease;
+  }
+  .contact-card:hover, .contact-card:focus-visible{ border-color: var(--verified); }
+  .contact-k{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 8px; }
+  .contact-v{ font-size: 14.5px; color: var(--text); font-weight: 500; }
+  .foot-note{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .foot-note a{ color: var(--verified); text-decoration: none; }
+
+  @media (max-width: 640px){
+    header.hero{ padding: 80px 0 60px; }
+    section{ padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-id"><b>S. CHHABRA</b> — AI / SEC</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#pitch">Pitch</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> OPEN TO CO-OP · TORONTO, CANADA</div>
+    <h1 class="name">Sanchit Chhabra</h1>
+    <p class="hero-line" style="font-size:17px; max-width:600px;">AI systems developer and cybersecurity analyst — I build the platform, then try to break it before someone else does.</p>
+    <p class="pitch">Graduate Diploma candidate in AI, York University-certified in Cybersecurity Operations. I design RAG architectures that ground their answers, and I run penetration tests that don't stop at "vulnerable found."<span class="cursor" aria-hidden="true"></span></p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="assets/Sanchit_Chhabra_Resume.pdf" target="_blank" rel="noopener">↓ Download résumé</a>
+      <a class="btn" href="#projects">View project case files</a>
+      <a class="btn" href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">01 / ABOUT</span>
+      <h2>Two disciplines, one habit</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I didn't set out to work across both AI and cybersecurity — I ended up here because I kept noticing the same gap in both fields: systems that work fine in the demo and haven't been stress-tested against reality.</p>
+        <p>On the AI side, that means building a <strong>RAG-based academic support platform</strong> and forcing it to ground every answer in retrieved sources instead of guessing. On the security side, it means taking an enterprise Windows Server that looked secure and proving otherwise with <strong>EternalBlue</strong> and a black-box penetration test.</p>
+        <p>I'm a B.Sc. Computer Science graduate (Honors) from Delhi University, a York University-certified Cybersecurity Operations specialist, and currently completing a Graduate Diploma in AI Analysis, Design &amp; Implementation at Durham College.</p>
+      </div>
+      <div class="ledger">
+        <div class="ledger-title">QUICK FACTS</div>
+        <div class="ledger-row"><span class="ledger-k">Location</span><span class="ledger-v">Toronto, Canada</span></div>
+        <div class="ledger-row"><span class="ledger-k">Status</span><span class="ledger-v">Seeking co-op</span></div>
+        <div class="ledger-row"><span class="ledger-k">Certification</span><span class="ledger-v">CompTIA CySA+</span></div>
+        <div class="ledger-row"><span class="ledger-k">Focus</span><span class="ledger-v">RAG / AppSec</span></div>
+        <div class="ledger-row"><span class="ledger-k">Languages</span><span class="ledger-v">Python, Java, TS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">02 / EXPERIENCE</span>
+      <h2>Work history</h2>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="entry">
+      <div class="entry-meta">CURRENT</div>
+      <div>
+        <p class="entry-role">AI Systems &amp; Cybersecurity Security Engineer</p>
+        <p class="entry-org">Wristkey Global Solutions — USA</p>
+        <ul>
+          <li>Led an AI-driven vulnerability risk assessment for a mobile/wearable wallet ecosystem, targeting NFC communication and biometric verification attack vectors.</li>
+          <li>Authored an industry-standard security whitepaper on systemic risks and AI-integrated mitigation strategies, presented to investors and partners.</li>
+          <li>Built an AI-enhanced incident response and debugging workflow, cutting manual triage time for system-wide latency anomalies across mobile and wearable platforms.</li>
+          <li>Benchmarked security models against Ledger and MetaMask through competitive ecosystem analysis, informing regulatory compliance and threat-detection upgrades.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-meta">PRIOR</div>
+      <div>
+        <p class="entry-role">AI-Augmented Cybersecurity Incident Response &amp; SOC II Compliance</p>
+        <p class="entry-org">Bumima Trustshare — USA</p>
+        <ul>
+          <li>Architected a three-tier AI-driven Incident Management Plan aligned to SOC II compliance standards, covering Marketing/Communications, Developer Infrastructure, and Financial Monitoring risk levels.</li>
+          <li>Integrated RAG-based monitoring to detect data infrastructure anomalies in real time.</li>
+          <li>Developed standardized operating procedures using LLM-integrated agents, reducing response time for Level 1–3 security breaches.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">03 / CASE FILES</span>
+      <h2>Projects &amp; results</h2>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <p class="case-title">Personalized Learning &amp; Academic Support Platform</p>
+          <p class="case-stack">FastAPI · Angular · LangChain · PostgreSQL · Chroma — Capstone</p>
+        </div>
+        <span class="badge badge-verified">−30% HALLUCINATION</span>
+      </div>
+      <div class="fields">
+        <div>
+          <div class="field-k">TASK</div>
+          <div class="field-v">Ground AI answers in real sources</div>
+        </div>
+        <div>
+          <div class="field-k">METHOD</div>
+          <div class="field-v">RAG + Chroma vector search</div>
+        </div>
+        <div>
+          <div class="field-k">RESULT</div>
+          <div class="field-v">30% fewer hallucinated responses</div>
+        </div>
+      </div>
+      <p class="result">Engineered a RAG-based academic support platform for precise, source-grounded knowledge retrieval. Built backend services in FastAPI and PostgreSQL with Chroma vector search for optimized indexing; integrated secure REST APIs with an Angular frontend and deployed via Render and Vercel. <b>Reduced AI response hallucination by 30%</b> through targeted prompt engineering and vector database grounding.</p>
+    </div>
+
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <p class="case-title">Red Team Penetration Testing: Enterprise Risk Mitigation</p>
+          <p class="case-stack">Metasploit · Nmap — Capstone</p>
+        </div>
+        <span class="badge badge-flag">CVSS 8.8</span>
+      </div>
+      <div class="fields">
+        <div>
+          <div class="field-k">TARGET</div>
+          <div class="field-v">Enterprise Windows Server</div>
+        </div>
+        <div>
+          <div class="field-k">METHOD</div>
+          <div class="field-v">Black-box · EternalBlue (MS17-010)</div>
+        </div>
+        <div>
+          <div class="field-k">RESULT</div>
+          <div class="field-v">Full SYSTEM privileges via RCE</div>
+        </div>
+      </div>
+      <p class="result">Conducted a black-box penetration test on an enterprise Windows Server, identifying critical security deficiencies. Exploited the EternalBlue (MS17-010) vulnerability via Metasploit to achieve remote code execution with full <b>NT AUTHORITY\SYSTEM</b> privileges. Used Nmap for reconnaissance, mapping insecure SMBv1 protocols and risky HTTP methods (TRACE/CWE-16). Authored a 10-page executive report mapping findings to CVSS 3.1 scores (<b>Base Score 8.8</b>) with a strategic remediation roadmap.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">04 / SKILLS</span>
+      <h2>Toolkit</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>AI &amp; DATA SCIENCE</h3>
+        <div class="tag-list">
+          <span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">LLM Integration</span>
+          <span class="tag">Hugging Face</span><span class="tag">Random Forest</span><span class="tag">k-means</span><span class="tag">PCA</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>LANGUAGES</h3>
+        <div class="tag-list">
+          <span class="tag">Python (Expert)</span><span class="tag">Java</span><span class="tag">TypeScript</span>
+          <span class="tag">SQL</span><span class="tag">C</span><span class="tag">C++ (basics)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>BACKEND &amp; DATABASE</h3>
+        <div class="tag-list">
+          <span class="tag">FastAPI</span><span class="tag">Spring Boot</span><span class="tag">PostgreSQL</span>
+          <span class="tag">MySQL</span><span class="tag">SQL Server</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>CYBERSECURITY &amp; SYSTEMS</h3>
+        <div class="tag-list">
+          <span class="tag">Network Security</span><span class="tag">Operating Systems</span><span class="tag">Distributed Systems</span>
+          <span class="tag">System Programming</span><span class="tag">Secure API Integration</span><span class="tag">Rules of Engagement</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>TOOLS &amp; DEPLOYMENT</h3>
+        <div class="tag-list">
+          <span class="tag">Git/GitHub</span><span class="tag">Jira</span><span class="tag">Render</span><span class="tag">Vercel</span>
+          <span class="tag">Swagger</span><span class="tag">VS Code</span><span class="tag">Tableau</span><span class="tag">Angular v17+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pitch">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">05 / PITCH</span>
+      <h2>Elevator pitch</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="transcript">
+      <div class="transcript-label"><span class="dot" style="width:6px;height:6px;"></span> TRANSCRIPT — 35 SEC</div>
+      <p>"I work at the intersection of AI development and cybersecurity — a combination you don't see together that often. I've built RAG-based platforms, most recently an academic support tool where I cut hallucinated answers by 30%. I also do hands-on penetration testing — I exploited EternalBlue on an enterprise server to get full system access, scored that finding 8.8 on CVSS, then wrote the executive report to get it fixed. I'm finishing a Graduate Diploma in AI at Durham College on top of a Cybersecurity Operations certification, and I'm looking for a co-op where I can apply both skill sets to a real production environment."</p>
+      <div class="runtime">— S. Chhabra</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">06 / CONTACT</span>
+      <h2>Get in touch</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:Sanchit.chhabra@dcmail.ca">
+        <div class="contact-k">EMAIL</div>
+        <div class="contact-v">Sanchit.chhabra@dcmail.ca</div>
+      </a>
+      <a class="contact-card" href="#" target="_blank" rel="noopener">
+        <div class="contact-k">LINKEDIN</div>
+        <div class="contact-v">/in/sanchitchhabra</div>
+      </a>
+      <a class="contact-card" href="#" target="_blank" rel="noopener">
+        <div class="contact-k">GITHUB</div>
+        <div class="contact-v">sanchitchhabra.github.io</div>
+      </a>
+    </div>
+    <p class="foot-note">Built and deployed on GitHub Pages — <a href="assets/Sanchit_Chhabra_Resume.pdf" target="_blank" rel="noopener">download résumé (PDF)</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
