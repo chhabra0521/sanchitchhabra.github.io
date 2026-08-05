@@ -178,7 +178,7 @@
     background: var(--bg-panel);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px 20px;
     backdrop-filter: blur(16px);
     box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
     transform-style: preserve-3d;
@@ -190,9 +190,9 @@
     box-shadow: 0 30px 60px rgba(6,182,212,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
   }
   .profile-img-container {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 16px;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
     border-radius: 50%;
     padding: 4px;
     background: linear-gradient(135deg, var(--cyan), var(--purple));
@@ -204,37 +204,6 @@
     object-fit: cover;
     border-radius: 50%;
     background: #111;
-  }
-  .profile-tagline {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--cyan);
-    margin-bottom: 12px;
-  }
-  .profile-stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 16px;
-    border-top: 1px solid var(--border);
-    padding-top: 14px;
-  }
-  .stat-box {
-    background: rgba(11, 15, 25, 0.4);
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.03);
-  }
-  .stat-num {
-    font-family: var(--display);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .stat-lbl {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text-dim);
   }
 
   .hero-cta{
@@ -561,7 +530,6 @@
         <p class="hero-line">AI systems developer and cybersecurity analyst — I build the platform, then try to break it before someone else does.</p>
         <p class="pitch">Graduate Diploma candidate in AI, York University-certified in Cybersecurity Operations. I design RAG architectures that ground their answers, and I run penetration tests that don't stop at "vulnerable found."<span class="cursor" aria-hidden="true"></span></p>
         <div class="hero-cta">
-          <a class="btn btn-solid" href="assets/Sanchit_Chhabra_Resume.pdf" target="_blank" rel="noopener">↓ Download résumé</a>
           <a class="btn" href="#projects">View project case files</a>
           <a class="btn" href="#contact">Contact</a>
         </div>
@@ -571,18 +539,7 @@
       <div class="profile-card-3d" id="profile-card">
         <div class="profile-glass">
           <div class="profile-img-container">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" alt="Sanchit Chhabra">
-          </div>
-          <div class="profile-tagline">AI & Cybersecurity Engineer</div>
-          <div class="profile-stats-grid">
-            <div class="stat-box">
-              <div class="stat-num" data-val="30">0%</div>
-              <div class="stat-lbl">Hallucination Cut</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num" data-val="8.8">0</div>
-              <div class="stat-lbl">Max CVSS Score</div>
-            </div>
+            <img src="assets/IMG_8795 2.jpg" alt="Sanchit Chhabra">
           </div>
         </div>
       </div>
@@ -886,30 +843,6 @@
       glass.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
     });
   }
-
-  // Animated Statistics Counters
-  const statNums = document.querySelectorAll('.stat-num');
-  let animated = false;
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + window.innerHeight;
-    const heroSection = document.querySelector('header.hero');
-    if (!animated && heroSection && scrollPos > heroSection.offsetTop + 100) {
-      statNums.forEach(el => {
-        const target = parseFloat(el.getAttribute('data-val'));
-        let current = 0;
-        const step = target / 30;
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          el.innerText = target % 1 !== 0 ? current.toFixed(1) + (target === 8.8 ? '' : '%') : Math.floor(current) + '%';
-        }, 30);
-      });
-      animated = true;
-    }
-  });
 </script>
 </body>
 </html>
