@@ -731,7 +731,7 @@
         <p class="pitch">Graduate Diploma candidate in AI, York University-certified in Cybersecurity Operations. I design RAG architectures that ground their answers, and I run penetration tests that don't stop at "vulnerable found."</p>
         <div class="hero-cta">
           <a class="btn btn-solid" href="#projects">Explore Case Files</a>
-          <a class="btn" href="resume.pdf" target="_blank" rel="noopener noreferrer">Built for AI Dashboard &amp; Secure Ecosystems — download résumé (PDF)</a>
+          <a class="btn" href="#contact">Contact</a>
         </div>
       </div>
       
@@ -944,121 +944,247 @@
     <div class="tech-showcase-grid">
       <div class="tech-panel">
         <h3>🧠 Neural Architecture</h3>
+        <p>Dynamic retrieval and knowledge tracing for intelligent agent grounding.</p>
         <div class="neural-sim">
-          <canvas id="cubeCanvas"></canvas>
+          <div class="node"></div>
+          <div class="node"></div>
+          <div class="node"></div>
+          <div class="node"></div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>Designed & Developed by Sanchit Chhabra. Powered by Three.js & Neural WebGL. &copy; 2026.</p>
+      <div class="tech-panel">
+        <h3>🛡️ Threat Detection</h3>
+        <p>Continuous vulnerability assessment, penetration testing, and SOC alignment.</p>
+        <div class="security-sim">
+          <div class="radar-sweep"></div>
+          <span>STATUS: ALL SYSTEMS SECURE</span>
+        </div>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    // Canvas and Scene Initialization
-    const cubeCanvas = document.getElementById('cubeCanvas');
-    const cubeScene = new THREE.Scene();
-    const scene = new THREE.Scene();
+<section id="pitch">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">06 / PITCH</span>
+      <h2>Elevator pitch</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="transcript">
+      <div class="transcript-label"><span class="dot" style="width:6px;height:6px;"></span> TRANSCRIPT — 35 SEC</div>
+      <p>"I work at the intersection of AI development and cybersecurity — a combination you don't see together that often. I've built RAG-based platforms, most recently an academic support tool where I cut hallucinated answers by 30%. I also do hands-on penetration testing — I exploited EternalBlue on an enterprise server to get full system access, scored that finding 8.8 on CVSS, then wrote the executive report to get it fixed. I'm finishing a Graduate Diploma in AI at Durham College on top of a Cybersecurity Operations certification, and I'm looking for a co-op where I can apply both skill sets to a real production environment."</p>
+      <div class="runtime">— S. Chhabra</div>
+    </div>
+  </div>
+</section>
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    document.body.appendChild(renderer.domElement);
-    renderer.domElement.style.position = 'fixed';
-    renderer.domElement.style.top = '0';
-    renderer.domElement.style.left = '0';
-    renderer.domElement.style.zIndex = '-1';
-    renderer.domElement.style.pointerEvents = 'none';
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">07 / CONTACT</span>
+      <h2>Get in touch</h2>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:Sanchit.chhabra@dcmail.ca">
+        <div class="contact-k">EMAIL</div>
+        <div class="contact-v">Sanchit.chhabra@dcmail.ca</div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/sanchit-chhabra" target="_blank" rel="noopener">
+        <div class="contact-k">LINKEDIN</div>
+        <div class="contact-v">linkedin.com/in/sanchit-chhabra</div>
+      </a>
+      <a class="contact-card" href="https://chhabra0521.github.io/sanchitchhabra.github.io/" target="_blank" rel="noopener">
+        <div class="contact-k">GITHUB</div>
+        <div class="contact-v">chhabra0521.github.io</div>
+      </a>
+    </div>
+   <p class="foot-note">Built for AI Dashboard &amp; Secure Ecosystems — <a href="Sanchit_Chhabra_Resume.pdf" target="_blank" rel="noopener">download résumé (PDF)</a></p>
+  </div>
+</footer>
 
-    // Background Particle Field
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 700;
-    const posArray = new Float32Array(particlesCount * 3);
+<script>
+  // ---------- LOADING SCREEN SIMULATOR ----------
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    const fill = document.getElementById('progress-fill');
+    const text = document.getElementById('loader-text');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 25) + 10;
+      if(progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        text.innerText = "> SYSTEM INITIALIZED SUCCESSFULLY";
+        setTimeout(() => loader.classList.add('fade-out'), 400);
+      } else if(progress > 60) {
+        text.innerText = "> CONNECTING SECURITY LAYER...";
+      } else if(progress > 30) {
+        text.innerText = "> LOADING NEURAL NETWORK...";
+      }
+      fill.style.width = progress + '%';
+    }, 120);
+  });
 
-    for(let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 10;
-    }
+  // ---------- CUSTOM CURSOR ----------
+  const cursorDot = document.getElementById('cursor-dot');
+  const cursorRing = document.getElementById('cursor-ring');
+  window.addEventListener('mousemove', (e) => {
+    cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    cursorRing.style.transform = `translate(${e.clientX - 13}px, ${e.clientY - 13}px)`;
+  });
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.015,
-      color: 0x06b6d4,
-      transparent: true,
-      opacity: 0.7
-    });
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
+  // ---------- THREE.JS BACKGROUND & AI CUBE ----------
+  // 1. Fullscreen Particle Network Background
+  const bgCanvas = document.getElementById('webgl-canvas');
+  const bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true, antialias: true });
+  bgRenderer.setSize(window.innerWidth, window.innerHeight);
+  bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    camera.position.z = 3;
+  const bgScene = new THREE.Scene();
+  const bgCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  bgCamera.position.z = 50;
 
-    // Cube 3D Simulation Elements
-    const cubeCamera = new THREE.PerspectiveCamera(75, cubeCanvas.clientWidth / cubeCanvas.clientHeight, 0.1, 1000);
-    const cubeRenderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, alpha: true, antialias: true });
-    cubeRenderer.setSize(cubeCanvas.clientWidth, cubeCanvas.clientHeight);
-    cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const particlesCount = 300;
+  const posArray = new Float32Array(particlesCount * 3);
+  for(let i=0; i<particlesCount*3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 120;
+  }
+  const particleGeometry = new THREE.BufferGeometry();
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+  const particleMaterial = new THREE.PointsMaterial({
+    size: 0.6,
+    color: 0x06B6D4,
+    transparent: true,
+    opacity: 0.6
+  });
+  const particlesMesh = new THREE.Points(particleGeometry, particleMaterial);
+  bgScene.add(particlesMesh);
 
-    const geometry = new THREE.BoxGeometry(1.6, 1.6, 1.6);
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x8b5cf6,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.8
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    cubeScene.add(cube);
+  // 2. Rotating AI Cube in Hero Section
+  const cubeCanvas = document.getElementById('three-cube-canvas');
+  const cubeContainer = document.getElementById('cube-container');
+  const cubeRenderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, alpha: true, antialias: true });
+  cubeRenderer.setSize(cubeContainer.clientWidth, cubeContainer.clientHeight);
+  cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const innerGeo = new THREE.SphereGeometry(0.7, 16, 16);
-    const innerMat = new THREE.MeshBasicMaterial({
-      color: 0x06b6d4,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.6
-    });
-    const innerSphere = new THREE.Mesh(innerGeo, innerMat);
-    cubeScene.add(innerSphere);
+  const cubeScene = new THREE.Scene();
+  const cubeCamera = new THREE.PerspectiveCamera(50, cubeContainer.clientWidth / cubeContainer.clientHeight, 0.1, 1000);
+  cubeCamera.position.z = 4.5;
 
-    cubeCamera.position.z = 3.2;
+  // Wireframe / Glowing AI Cube
+  const geometry = new THREE.BoxGeometry(1.8, 1.8, 1.8);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x06B6D4,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.75
+  });
+  const aiCube = new THREE.Mesh(geometry, material);
+  cubeScene.add(aiCube);
 
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) - 0.5;
-      mouseY = (e.clientY / window.innerHeight) - 0.5;
-    });
+  // Inner glowing core sphere
+  const coreGeo = new THREE.SphereGeometry(0.6, 32, 32);
+  const coreMat = new THREE.MeshBasicMaterial({
+    color: 0x8B5CF6,
+    transparent: true,
+    opacity: 0.6
+  });
+  const innerSphere = new THREE.Mesh(coreGeo, coreMat);
+  cubeScene.add(innerSphere);
 
-    function animate() {
-      requestAnimationFrame(animate);
-      particlesMesh.rotation.y += 0.0005;
-      particlesMesh.rotation.x += 0.0002;
+  // Mouse interactivity for cube and background
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+    mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+  });
 
-      cube.rotation.x += 0.008;
-      cube.rotation.y += 0.01;
-      innerSphere.rotation.x -= 0.01;
-      innerSphere.rotation.y -= 0.015;
+  window.addEventListener('resize', () => {
+    bgRenderer.setSize(window.innerWidth, window.innerHeight);
+    bgCamera.aspect = window.innerWidth / window.innerHeight;
+    bgCamera.updateProjectionMatrix();
 
-      cube.rotation.x += mouseY * 0.1;
-      cube.rotation.y += mouseX * 0.1;
-
-      renderer.render(scene, camera);
-      cubeRenderer.render(cubeScene, cubeCamera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-
-      const width = cubeCanvas.parentElement.clientWidth;
-      const height = cubeCanvas.parentElement.clientHeight;
-      cubeCamera.aspect = width / height;
+    if(cubeContainer) {
+      cubeRenderer.setSize(cubeContainer.clientWidth, cubeContainer.clientHeight);
+      cubeCamera.aspect = cubeContainer.clientWidth / cubeContainer.clientHeight;
       cubeCamera.updateProjectionMatrix();
-      cubeRenderer.setSize(width, height);
+    }
+  });
+
+  // Render loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate background particles
+    particlesMesh.rotation.y += 0.0005;
+    particlesMesh.rotation.x += 0.0002;
+
+    // Rotate AI Cube and sphere
+    aiCube.rotation.x += 0.008 + mouseY * 0.5;
+    aiCube.rotation.y += 0.01 + mouseX * 0.5;
+    innerSphere.rotation.x -= 0.005;
+    innerSphere.rotation.y -= 0.008;
+
+    bgRenderer.render(bgScene, bgCamera);
+    cubeRenderer.render(cubeScene, cubeCamera);
+  }
+  animate();
+
+  // ---------- STATISTICS ANIMATED COUNTERS ----------
+  const statsSection = document.querySelector('.stats-grid');
+  let animated = false;
+  window.addEventListener('scroll', () => {
+    const pos = statsSection.getBoundingClientRect().top;
+    if(pos < window.innerHeight && !animated) {
+      animated = true;
+      document.querySelectorAll('.stat-number').forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const speed = target / 30;
+        const updateCount = () => {
+          count += speed;
+          if(count < target) {
+            counter.innerText = Math.ceil(count) + (target === 30 || target === 40 ? '+' : (target === 12 ? '+' : ''));
+            setTimeout(updateCount, 40);
+          } else {
+            counter.innerText = target + (target === 30 ? '%' : '+');
+          }
+        };
+        updateCount();
+      });
+    }
+  });
+
+  // ---------- SCROLL FADE-IN OBSERVER ----------
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
     });
-  </script>
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+  // ---------- 3D CARD TILT EFFECT ----------
+  document.querySelectorAll('.case, .timeline-item, .skill-group, .tech-panel').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      const dx = (x - xc) / xc;
+      const dy = (y - yc) / yc;
+      card.style.transform = `perspective(1000px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(0px)';
+    });
+  });
+</script>
 </body>
 </html>
