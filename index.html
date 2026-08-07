@@ -946,214 +946,120 @@
         <h3>🧠 Neural Architecture</h3>
         <p>Dynamic retrieval and knowledge tracing for intelligent agent grounding.</p>
         <div class="neural-sim">
-          <div class="node"></div>
-          <div class="node"></div>
-          <div class="node"></div>
+          <canvas id="cubeCanvas"></canvas>
         </div>
       </div>
-      <div class="tech-panel">
-        <h3>🛡️ Threat Mitigation</h3>
-        <p>Active vulnerability assessment, pen-testing, and compliance safeguards.</p>
-        <div class="security-sim">
-          <div class="radar-sweep"></div>
-          <span>SCANNING... SECURE</span>
-        </div>
-      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Sanchit Chhabra. All rights reserved.</p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<section id="pitch-section">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">06 / PITCH</span>
-      <h2>Elevator Transcript</h2>
-      <span class="sec-rule"></span>
-    </div>
-    <div class="transcript">
-      <div class="transcript-label">&gt; SYSTEM_AUDIO_STREAM_ACTIVE</div>
-      <p>"I build AI platforms that actually know where their answers come from, and I test cybersecurity infrastructure as if a breach is already happening. Whether it's cutting RAG hallucinations by 30% or uncovering critical system vulnerabilities, my focus is resilience from the ground up."</p>
-      <div class="runtime">&gt; RUNTIME: 30 SECONDS // READY FOR DEPLOYMENT</div>
-    </div>
-  </div>
-</section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Canvas and Scene Initialization
+    const cubeCanvas = document.getElementById('cubeCanvas');
+    const cubeScene = new THREE.Scene();
+    const scene = new THREE.Scene();
 
-<footer id="contact">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">07 / CONTACT</span>
-      <h2>Initiate Connection</h2>
-      <span class="sec-rule"></span>
-    </div>
-    <div class="contact-grid">
-      <a href="mailto:chhabra0521@gmail.com" class="contact-card">
-        <div class="contact-k">EMAIL</div>
-        <div class="contact-v">chhabra0521@gmail.com</div>
-      </a>
-      <a href="https://linkedin.com/in/sanchitchhabra" target="_blank" rel="noopener noreferrer" class="contact-card">
-        <div class="contact-k">LINKEDIN</div>
-        <div class="contact-v">linkedin.com/in/sanchitchhabra</div>
-      </a>
-      <a href="https://github.com/chhabra0521" target="_blank" rel="noopener noreferrer" class="contact-card">
-        <div class="contact-k">GITHUB</div>
-        <div class="contact-v">github.com/chhabra0521</div>
-      </a>
-    </div>
-    <div class="foot-note">
-      Designed &amp; Developed by <b>Sanchit Chhabra</b>. Powered by Three.js &amp; Neural WebGL. &copy; 2026.
-    </div>
-  </div>
-</footer>
-
-<script>
-  // Loader Simulation
-  window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    const fill = document.getElementById('progress-fill');
-    let width = 0;
-    const interval = setInterval(() => {
-      width += Math.floor(Math.random() * 20) + 10;
-      if (width >= 100) {
-        width = 100;
-        clearInterval(interval);
-        setTimeout(() => loader.classList.add('fade-out'), 300);
-      }
-      fill.style.width = width + '%';
-    }, 150);
-  });
-
-  // Custom Cursor
-  const cursorDot = document.getElementById('cursor-dot');
-  const cursorRing = document.getElementById('cursor-ring');
-  window.addEventListener('mousemove', (e) => {
-    cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    cursorRing.style.transform = `translate(${e.clientX - 13}px, ${e.clientY - 13}px)`;
-  });
-
-  // Intersection Observer for Sections
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('section').forEach(sec => observer.observe(sec));
-
-  // Statistics Counter Animation
-  const statNumbers = document.querySelectorAll('.stat-number');
-  let animatedStats = false;
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + window.innerHeight;
-    const statsSection = document.querySelector('.stats-grid');
-    if (statsSection && !animatedStats && scrollPos >= statsSection.offsetTop) {
-      statNumbers.forEach(num => {
-        const target = +num.getAttribute('data-target');
-        let count = 0;
-        const inc = target / 30;
-        const updateCount = () => {
-          count += inc;
-          if(count < target) {
-            num.innerText = Math.ceil(count);
-            setTimeout(updateCount, 40);
-          } else {
-            num.innerText = target + (target === 30 ? '%' : '+');
-          }
-        };
-        updateCount();
-      });
-      animatedStats = true;
-    }
-  });
-
-  // Three.js Background & AI Cube Setup
-  const canvas = document.getElementById('webgl-canvas');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 700;
-  const posArray = new Float32Array(particlesCount * 3);
-  for(let i = 0; i < particlesCount * 3; i++) {
-    posArray[i] = (Math.random() - 0.5) * 15;
-  }
-  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-  const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.02,
-    color: 0x06b6d4,
-    transparent: true,
-    opacity: 0.5
-  });
-  const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-  scene.add(particlesMesh);
-  camera.position.z = 3;
-
-  // Three.js Cube in Header
-  const cubeCanvas = document.getElementById('three-cube-canvas');
-  const cubeScene = new THREE.Scene();
-  const cubeCamera = new THREE.PerspectiveCamera(75, cubeCanvas.clientWidth / cubeCanvas.clientHeight, 0.1, 1000);
-  const cubeRenderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, alpha: true, antialias: true });
-  cubeRenderer.setSize(cubeCanvas.clientWidth, cubeCanvas.clientHeight);
-  cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const geometry = new THREE.BoxGeometry(1.6, 1.6, 1.6);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0x8b5cf6,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.8
-  });
-  const cube = new THREE.Mesh(geometry, material);
-  cubeScene.add(cube);
-
-  const innerGeo = new THREE.SphereGeometry(0.7, 16, 16);
-  const innerMat = new THREE.MeshBasicMaterial({
-    color: 0x06b6d4,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.6
-  });
-  const innerSphere = new THREE.Mesh(innerGeo, innerMat);
-  cubeScene.add(innerSphere);
-
-  cubeCamera.position.z = 3.2;
-
-  let mouseX = 0, mouseY = 0;
-  window.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth) - 0.5;
-    mouseY = (e.clientY / window.innerHeight) - 0.5;
-  });
-
-  function animate() {
-    requestAnimationFrame(animate);
-    particlesMesh.rotation.y += 0.0005;
-    particlesMesh.rotation.x += 0.0002;
-
-    cube.rotation.x += 0.008;
-    cube.rotation.y += 0.01;
-    innerSphere.rotation.x -= 0.01;
-    innerSphere.rotation.y -= 0.015;
-
-    cube.rotation.x += mouseY * 0.1;
-    cube.rotation.y += mouseX * 0.1;
-
-    renderer.render(scene, camera);
-    cubeRenderer.render(cubeScene, cubeCamera);
-  }
-  animate();
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.body.appendChild(renderer.domElement);
+    renderer.domElement.style.position = 'fixed';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.left = '0';
+    renderer.domElement.style.zIndex = '-1';
+    renderer.domElement.style.pointerEvents = 'none';
 
-    const width = cubeCanvas.parentElement.clientWidth;
-    const height = cubeCanvas.parentElement.clientHeight;
-    cubeCamera.aspect = width / height;
-    cubeCamera.updateProjectionMatrix();
-    cubeRenderer.setSize(width, height);
-  });
-</script>
+    // Background Particle Field
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 700;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for(let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 10;
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.015,
+      color: 0x06b6d4,
+      transparent: true,
+      opacity: 0.7
+    });
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+
+    camera.position.z = 3;
+
+    // Cube 3D Simulation Elements
+    const cubeCamera = new THREE.PerspectiveCamera(75, cubeCanvas.clientWidth / cubeCanvas.clientHeight, 0.1, 1000);
+    const cubeRenderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, alpha: true, antialias: true });
+    cubeRenderer.setSize(cubeCanvas.clientWidth, cubeCanvas.clientHeight);
+    cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const geometry = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x8b5cf6,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.8
+    });
+    const cube = new THREE.Mesh(geometry, material);
+    cubeScene.add(cube);
+
+    const innerGeo = new THREE.SphereGeometry(0.7, 16, 16);
+    const innerMat = new THREE.MeshBasicMaterial({
+      color: 0x06b6d4,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.6
+    });
+    const innerSphere = new THREE.Mesh(innerGeo, innerMat);
+    cubeScene.add(innerSphere);
+
+    cubeCamera.position.z = 3.2;
+
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) - 0.5;
+      mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      particlesMesh.rotation.y += 0.0005;
+      particlesMesh.rotation.x += 0.0002;
+
+      cube.rotation.x += 0.008;
+      cube.rotation.y += 0.01;
+      innerSphere.rotation.x -= 0.01;
+      innerSphere.rotation.y -= 0.015;
+
+      cube.rotation.x += mouseY * 0.1;
+      cube.rotation.y += mouseX * 0.1;
+
+      renderer.render(scene, camera);
+      cubeRenderer.render(cubeScene, cubeCamera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const width = cubeCanvas.parentElement.clientWidth;
+      const height = cubeCanvas.parentElement.clientHeight;
+      cubeCamera.aspect = width / height;
+      cubeCamera.updateProjectionMatrix();
+      cubeRenderer.setSize(width, height);
+    });
+  </script>
 </body>
 </html>
