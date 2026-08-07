@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,45 +88,6 @@
     z-index: 0;
   }
 
-  /* ---------- LOADING SCREEN ---------- */
-  #loader {
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    color: var(--cyan);
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-  }
-  #loader.fade-out {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .loader-box {
-    width: 320px;
-    border: 1px solid var(--border);
-    padding: 24px;
-    border-radius: 12px;
-    background: var(--bg-panel);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  }
-  .loader-title { font-size: 13px; margin-bottom: 12px; letter-spacing: 0.1em; }
-  .progress-track {
-    width: 100%; height: 6px; background: rgba(255,255,255,0.05);
-    border-radius: 3px; overflow: hidden; margin-top: 10px;
-  }
-  .progress-fill {
-    width: 0%; height: 100%;
-    background: linear-gradient(90deg, var(--cyan), var(--purple));
-    transition: width 0.3s ease;
-    box-shadow: 0 0 12px var(--cyan);
-  }
-
   .wrap{
     position: relative;
     z-index: 1;
@@ -210,9 +170,7 @@
     width:8px; height:8px; border-radius:50%;
     background: var(--cyan);
     box-shadow: 0 0 12px var(--cyan);
-    animation: pulse-dot 2s infinite;
   }
-  @keyframes pulse-dot{ 0%, 100%{ transform: scale(1); opacity: 1; } 50%{ transform: scale(1.4); opacity: 0.6; } }
 
   h1.name{
     font-family: var(--display);
@@ -335,16 +293,6 @@
   section{
     padding: 76px 0;
     border-bottom: 1px solid var(--border);
-  }
-  /* fade-in only when JS is running, so content is never hidden without it */
-  html.js section{
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  html.js section.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
   .sec-head{
     display:flex;
@@ -602,11 +550,8 @@
     background: var(--cyan);
     box-shadow: 0 0 12px var(--cyan);
     position: relative;
-    animation: node-pulse 2s infinite ease-in-out;
   }
-  .node:nth-child(2) { animation-delay: 0.4s; background: var(--purple); box-shadow: 0 0 12px var(--purple); }
-  .node:nth-child(3) { animation-delay: 0.8s; }
-  @keyframes node-pulse { 0%, 100%{ transform: scale(1); opacity: 0.7; } 50%{ transform: scale(1.4); opacity: 1; } }
+  .node:nth-child(2) { background: var(--purple); box-shadow: 0 0 12px var(--purple); }
   
   /* Cybersecurity Radar / Shield Simulation Box */
   .security-sim {
@@ -631,10 +576,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    animation: rotate-radar 6s linear infinite;
     margin-bottom: 8px;
   }
-  @keyframes rotate-radar { 100%{ transform: rotate(360deg); } }
 
   /* ---------- ELEVATOR PITCH ---------- */
   .transcript{
@@ -709,16 +652,9 @@
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }
-    *, *::before, *::after{
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    html.js section{ opacity: 1; transform: none; }
-    #webgl-canvas{ display: none; }
+    *, *::before, *::after{ transition-duration: 0.01ms !important; }
   }
 </style>
-<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -728,16 +664,6 @@
 
 <!-- Three.js Background Canvas -->
 <canvas id="webgl-canvas" aria-hidden="true"></canvas>
-
-<!-- Loading Screen Simulator -->
-<div id="loader" aria-hidden="true">
-  <div class="loader-box">
-    <div class="loader-title" id="loader-text">&gt; INITIALIZING AI NEURAL CORE...</div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-  </div>
-</div>
 
 <nav>
   <div class="wrap">
@@ -780,19 +706,19 @@
     <!-- Statistics Counters -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-number" data-target="12" data-suffix="+">0</div>
+        <div class="stat-number">12+</div>
         <div class="stat-label">Projects Built</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" data-target="3" data-suffix="+">0</div>
+        <div class="stat-number">3+</div>
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" data-target="40" data-suffix="+">0</div>
+        <div class="stat-number">40+</div>
         <div class="stat-label">Technologies</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" data-target="30" data-suffix="%">0</div>
+        <div class="stat-number">30%</div>
         <div class="stat-label">Hallucination Cut</div>
       </div>
     </div>
@@ -867,7 +793,7 @@
       <span class="sec-rule"></span>
     </div>
 
-    <div class="case" data-tilt>
+    <div class="case">
       <div class="case-top">
         <div>
           <h3 class="case-title">Personalized Learning &amp; Academic Support Platform</h3>
@@ -892,7 +818,7 @@
       <p class="result">Engineered a RAG-based academic support platform for precise, source-grounded knowledge retrieval. Built backend services in FastAPI and PostgreSQL with Chroma vector search for optimized indexing; integrated secure REST APIs with an Angular frontend and deployed via Render and Vercel. <b>Reduced AI response hallucination by 30%</b> through targeted prompt engineering and vector database grounding.</p>
     </div>
 
-    <div class="case" data-tilt>
+    <div class="case">
       <div class="case-top">
         <div>
           <h3 class="case-title">Red Team Penetration Testing: Enterprise Risk Mitigation</h3>
@@ -1037,47 +963,7 @@
 </footer>
 
 <script>
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(pointer: fine)').matches;
-
-  // ---------- LOADING SCREEN SIMULATOR ----------
-  (() => {
-    const loader = document.getElementById('loader');
-    const fill = document.getElementById('progress-fill');
-    const text = document.getElementById('loader-text');
-    let done = false;
-
-    const dismiss = () => {
-      if(done) return;
-      done = true;
-      fill.style.width = '100%';
-      text.innerText = "> SYSTEM INITIALIZED SUCCESSFULLY";
-      setTimeout(() => loader.classList.add('fade-out'), prefersReducedMotion ? 0 : 400);
-    };
-
-    if(prefersReducedMotion) { dismiss(); return; }
-
-    const run = () => {
-      let progress = 0;
-      const interval = setInterval(() => {
-        if(done) { clearInterval(interval); return; }
-        progress += Math.floor(Math.random() * 25) + 10;
-        if(progress >= 100) {
-          clearInterval(interval);
-          dismiss();
-        } else if(progress > 60) {
-          text.innerText = "> CONNECTING SECURITY LAYER...";
-        } else if(progress > 30) {
-          text.innerText = "> LOADING NEURAL NETWORK...";
-        }
-        fill.style.width = Math.min(progress, 100) + '%';
-      }, 120);
-    };
-
-    window.addEventListener('load', run);
-    // failsafe: never keep the page hidden if load stalls (slow CDN, blocked script)
-    setTimeout(dismiss, 3000);
-  })();
 
   // ---------- CUSTOM CURSOR (fine pointers only) ----------
   if(finePointer) {
@@ -1154,12 +1040,16 @@
     const innerSphere = new THREE.Mesh(coreGeo, coreMat);
     cubeScene.add(innerSphere);
 
-    // Mouse interactivity for cube and background
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
-    });
+    // Static pose — no animation loop
+    aiCube.rotation.set(0.5, 0.65, 0);
+    innerSphere.rotation.set(0.3, 0.4, 0);
+    particlesMesh.rotation.set(0.2, 0.4, 0);
+
+    const renderFrame = () => {
+      bgRenderer.render(bgScene, bgCamera);
+      cubeRenderer.render(cubeScene, cubeCamera);
+    };
+    renderFrame();
 
     window.addEventListener('resize', () => {
       bgRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -1169,96 +1059,12 @@
       cubeRenderer.setSize(cubeContainer.clientWidth, cubeContainer.clientHeight);
       cubeCamera.aspect = cubeContainer.clientWidth / cubeContainer.clientHeight;
       cubeCamera.updateProjectionMatrix();
-    });
 
-    const renderFrame = () => {
-      bgRenderer.render(bgScene, bgCamera);
-      cubeRenderer.render(cubeScene, cubeCamera);
-    };
-
-    if(prefersReducedMotion) {
-      // single static frame, no animation loop
       renderFrame();
-    } else {
-      const animate = () => {
-        requestAnimationFrame(animate);
-
-        particlesMesh.rotation.y += 0.0005;
-        particlesMesh.rotation.x += 0.0002;
-
-        aiCube.rotation.x += 0.008 + mouseY * 0.5;
-        aiCube.rotation.y += 0.01 + mouseX * 0.5;
-        innerSphere.rotation.x -= 0.005;
-        innerSphere.rotation.y -= 0.008;
-
-        renderFrame();
-      };
-      animate();
-    }
+    });
   } catch (err) {
     console.warn('3D visuals disabled:', err.message);
   }
-
-  // ---------- STATISTICS ANIMATED COUNTERS ----------
-  const animateCounters = () => {
-    document.querySelectorAll('.stat-number').forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const suffix = counter.getAttribute('data-suffix') || '';
-      if(prefersReducedMotion) {
-        counter.innerText = target + suffix;
-        return;
-      }
-      let count = 0;
-      const speed = target / 30;
-      const updateCount = () => {
-        count += speed;
-        if(count < target) {
-          counter.innerText = Math.ceil(count) + suffix;
-          setTimeout(updateCount, 40);
-        } else {
-          counter.innerText = target + suffix;
-        }
-      };
-      updateCount();
-    });
-  };
-
-  const statsObserver = new IntersectionObserver((entries, obs) => {
-    if(entries.some(e => e.isIntersecting)) {
-      obs.disconnect();
-      animateCounters();
-    }
-  }, { threshold: 0.3 });
-  statsObserver.observe(document.querySelector('.stats-grid'));
-
-  // ---------- SCROLL FADE-IN OBSERVER ----------
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('section').forEach(sec => observer.observe(sec));
-
-  // ---------- 3D CARD TILT EFFECT (desktop only) ----------
-  if(finePointer && !prefersReducedMotion)
-  document.querySelectorAll('.case, .timeline-item, .skill-group, .tech-panel').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const xc = rect.width / 2;
-      const yc = rect.height / 2;
-      const dx = (x - xc) / xc;
-      const dy = (y - yc) / yc;
-      card.style.transform = `perspective(1000px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg) translateY(-4px)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(0px)';
-    });
-  });
 </script>
 </body>
 </html>
